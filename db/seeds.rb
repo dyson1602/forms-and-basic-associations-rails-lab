@@ -8,6 +8,8 @@
 
 # ID3 tag music genres are surprisingly specific.
 
+require 'faker'
+
 genres = Hash[[
   "Blues",
   "Classic Rock",
@@ -159,4 +161,19 @@ genres = Hash[[
   "Synthpop"
 ].map { |genre| [genre, Genre.find_or_create_by(name: genre)] }]
 
+Artist.destroy_all
+Song.destroy_all
+Note.destroy_all
 
+
+10.times do
+  Artist.create(name: Faker::Name.name)
+end
+
+20.times do
+  Song.create(title: Faker::Music::Prince.song, artist_id: Artist.all.sample.id, genre_id: Genre.all.sample.id)
+end
+
+30.times do
+  Note.create(content: Faker::Quote.most_interesting_man_in_the_world, song_id: Song.all.sample.id)
+end
